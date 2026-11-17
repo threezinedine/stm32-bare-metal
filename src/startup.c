@@ -38,8 +38,6 @@ uint32_t isr_vector[CORTEX_DEFAULT_ISR_VECTOR_SIZE + STM32F103C8T6_ISR_VECTOR_SI
 		(uint32_t)SysTick_Handler,		// SysTick handler
 };
 
-const uint32_t a = 23;
-
 extern void k_main(void);
 
 static void Reset_Handler(void)

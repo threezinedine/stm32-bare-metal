@@ -4,10 +4,3 @@ void k_main(void)
 	{
 	}
 }
-
-void HardFault_Handler(void)
-{
-	while (1)
-	{
-	}
-}
