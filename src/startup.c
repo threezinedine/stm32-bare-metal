@@ -38,10 +38,30 @@ uint32_t isr_vector[CORTEX_DEFAULT_ISR_VECTOR_SIZE + STM32F103C8T6_ISR_VECTOR_SI
 		(uint32_t)SysTick_Handler,		// SysTick handler
 };
 
-extern void k_main(void);
+extern void		k_main(void);
+extern uint32_t _ro_end;
+extern uint32_t _data_start;
+extern uint32_t _data_end;
+extern uint32_t _bss_start;
+extern uint32_t _bss_end;
 
 static void Reset_Handler(void)
 {
+	uint8_t* flash_data	 = (uint8_t*)&_ro_end;
+	uint8_t* ram_data	 = (uint8_t*)SRAM_START_ADDR;
+	uint32_t data_length = (uint32_t)&_data_end - (uint32_t)&_data_start;
+	uint32_t bss_length	 = (uint32_t)&_bss_end - (uint32_t)&_bss_start;
+
+	for (uint32_t i = 0; i < data_length; ++i)
+	{
+		ram_data[i] = flash_data[i];
+	}
+
+	for (uint32_t i = data_length; i < data_length + bss_length; ++i)
+	{
+		ram_data[i] = 0x00;
+	}
+
 	k_main();
 }
 
