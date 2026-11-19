@@ -35,10 +35,10 @@ directory:
 open:
 	$(OPENOCD) -f interface/stlink.cfg -f target/stm32f1x.cfg
 
-write:
+write: $(TARGET_ELF)
 	$(OPENOCD) -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program $(TARGET_ELF) verify reset exit"
 
-open-write:
+open-write: $(TARGET_ELF)
 	$(OPENOCD) -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program $(TARGET_ELF) verify reset"
 
 gdb:
